@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyChat</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Authentication Screen -->
+    <div id="auth-container" class="auth-container">
+        <div class="auth-form-wrapper">
+            <div class="auth-header">
+                <h1 id="auth-title">Login</h1>
+                <p id="auth-subtitle">Welcome back! Please enter your details.</p>
+            </div>
+            <!-- Login Form -->
+            <form id="login-form">
+                <div class="input-group">
+                    <label for="login-username">Username</label>
+                    <input type="text" id="login-username" required>
+                </div>
+                <div class="input-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                <button type="submit" class="auth-button">Login</button>
+            </form>
+            <!-- Signup Form -->
+            <form id="signup-form" class="hidden">
+                 <div class="input-group">
+                    <label for="signup-username">Username</label>
+                    <input type="text" id="signup-username" required>
+                </div>
+                <div class="input-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" required>
+                </div>
+                <button type="submit" class="auth-button">Sign Up</button>
+            </form>
+            <p class="auth-toggle">
+                <span id="toggle-text">Don't have an account?</span>
+                <a href="#" id="toggle-link">Sign Up</a>
+            </p>
+            <p id="auth-error" class="auth-error"></p>
+        </div>
+    </div>
+
+    <!-- Main Chat Application (hidden by default) -->
+    <div id="app-container" class="app-container hidden">
+        <!-- Sidebar with contacts -->
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <button id="profile-button" class="icon-button" title="View Profile">
+                    <!-- SVG for profile icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm0 14c-2.03 0-4.43-.82-6.14-2.88C7.55 15.8 9.68 15 12 15s4.45.8 6.14 2.12C16.43 19.18 14.03 20 12 20z"></path></svg>
+                </button>
+                <h3>Chats</h3>
+                <button id="add-contact-button" class="icon-button" title="Add Contact">
+                     <!-- SVG for add icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path></svg>
+                </button>
+            </div>
+            <div id="contact-list" class="contact-list">
+                <!-- Contact items will be injected here by JS -->
+            </div>
+             <div class="sidebar-footer">
+                <button id="logout-button" class="logout-button">Logout</button>
+            </div>
+        </aside>
+
+        <!-- Main chat window -->
+        <main id="chat-window" class="chat-window">
+            <!-- Welcome Screen -->
+            <div id="welcome-screen" class="welcome-screen">
+                <h2>Welcome to Real-Time Chat</h2>
+                <p>Select a contact to start messaging.</p>
+            </div>
+            
+            <!-- Active Chat View (hidden by default) -->
+            <div id="active-chat-area" class="active-chat-area hidden">
+                <header class="chat-header">
+                    <button id="back-to-contacts" class="icon-button back-button">
+                        <!-- SVG for back arrow icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg>
+                    </button>
+                    <div class="contact-info">
+                         <h2 id="chat-header-name"></h2>
+                         <div class="status-container">
+                            <span id="online-status-indicator" class="online-status-indicator"></span>
+                            <span id="chat-header-status">Offline</span>
+                            <span id="typing-indicator" class="typing-indicator"></span>
+                         </div>
+                    </div>
+                </header>
+                <div id="message-list" class="message-list">
+                    <!-- Messages will be injected here by JS -->
+                </div>
+                <footer class="chat-footer">
+                    <form id="message-form" class="message-form">
+                        <input type="text" id="message-input" placeholder="Type a message..." autocomplete="off">
+                        <button type="submit" class="send-button" title="Send Message">
+                             <!-- SVG for send icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>
+                        </button>
+                    </form>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="modal-backdrop" class="modal-backdrop hidden"></div>
+    
+    <!-- User Code Modal (after signup) -->
+    <div id="user-code-modal" class="modal hidden">
+        <h2>Signup Successful!</h2>
+        <p>Here is your unique User Code. Share it with friends to connect. Please save it somewhere safe!</p>
+        <div id="user-code-display" class="user-code-display" title="Click to copy code">
+            <span id="user-code-text"></span>
+            <!-- SVG for copy icon -->
+            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-5zm0 16H8V7h11v14z"></path></svg>
+        </div>
+        <button id="close-user-code-modal" class="modal-button">Got it!</button>
+    </div>
+
+    <!-- Profile Modal -->
+    <div id="profile-modal" class="modal hidden">
+        <h2>Your Profile</h2>
+        <div class="profile-info-item">
+            <span>Username</span>
+            <strong id="profile-username"></strong>
+        </div>
+        <div class="profile-info-item">
+            <span>Your User Code</span>
+            <strong id="profile-user-code"></strong>
+        </div>
+        <button id="close-profile-modal" class="modal-button">Close</button>
+    </div>
+
+    <!-- Add Contact Modal -->
+    <div id="add-contact-modal" class="modal hidden">
+        <h2>Add a New Contact</h2>
+        <p>Enter the 6-character User Code of the person you want to add.</p>
+        <form id="add-contact-form">
+            <input type="text" id="add-contact-input" placeholder="ABC123" maxlength="6" required>
+            <p id="add-contact-error" class="auth-error"></p>
+            <div class="modal-actions">
+                <button type="button" id="cancel-add-contact" class="modal-button secondary">Cancel</button>
+                <button type="submit" class="modal-button">Add</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast-notification" class="toast hidden">Code copied to clipboard!</div>
+
+    <script src="client.js"></script>
+</body>
+</html>
+
