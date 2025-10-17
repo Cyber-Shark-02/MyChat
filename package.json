@@ -1,33 +1,13 @@
-<<<<<<< HEAD
 {
-  "name": "real-time-chat-app",
+  "name": "mychat",
   "version": "1.0.0",
   "description": "A full-stack real-time chat application using Node.js and WebSockets.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
-  "author": "Gemini",
-  "license": "ISC",
   "dependencies": {
     "ws": "^8.13.0",
     "uuid": "^9.0.0"
   }
 }
-=======
-{
-  "name": "real-time-chat-app",
-  "version": "1.0.0",
-  "description": "A full-stack real-time chat application using Node.js and WebSockets.",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
-  },
-  "author": "Gemini",
-  "license": "ISC",
-  "dependencies": {
-    "ws": "^8.13.0",
-    "uuid": "^9.0.0"
-  }
-}
->>>>>>> 5f91e55 (NewCommit)
